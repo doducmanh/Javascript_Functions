@@ -1,0 +1,21 @@
+var promise = new Promise(
+    // Executor
+    function(resolve, reject) {
+        // Logic xử lý
+        // Thành công: resolve()
+        // Thất bại: reject()
+ 
+        reject('co loi!')
+    }
+)
+// 3 phương thức thường sử dụng, đều nhận bên trong 1 callback function
+promise
+    .then(function() { // được gọi khi resolve function được gọi
+        console.log('Successfully!')
+    })
+    .catch(function(error) { // được gọi khi reject function được gọi
+        console.log(error) // --> trả về 'co loi!'
+    })
+    .finally(function() { // khi 1 trong resolve hoặc reject được gọi, thì finally đều dược gọi
+        console.log('Done!')
+    })
