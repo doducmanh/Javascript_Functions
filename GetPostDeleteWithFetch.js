@@ -81,3 +81,43 @@ function handleDeleteCourse(id) {
             }
         })
 }
+// Patch
+function editCourse(idCourse, data, callback) {
+    fetch(cousrseAPI + '/' + idCourse, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(callback);
+}
+
+function handleEditCourse(idCourse) {
+    var title = document.querySelector(`.course-title-${idCourse}`).innerText;
+    var description = document.querySelector(`.course-desc-${idCourse}`).innerText;
+    var titleInput = document.querySelector('#title');
+    var descInput = document.querySelector('#description');
+
+    titleInput.value = title;
+    descInput.value = description;
+
+    var createBtn = document.querySelector('#create-btn');
+    createBtn.innerText = 'Edit';
+
+    createBtn.onclick = function () {
+        var data = {
+            title: titleInput.value,
+            desc: descInput.value,
+        }
+        editCourse(idCourse, data, function () {
+            getCourses(renderCourse);
+        })
+        createBtn.innerText = 'Create';
+        titleInput.value = '';
+        descInput.value = '';
+    }
+}
